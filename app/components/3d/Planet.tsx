@@ -26,7 +26,13 @@ export default function Planet({ planet, orbitRadius }: PlanetProps) {
   return (
     <mesh ref={meshRef} position={[orbitRadius, 0, 0]}>
       <sphereGeometry args={[planet.size, 32, 32]} />
-      <meshStandardMaterial color={planet.color} />
+      <meshStandardMaterial 
+        color={planet.color} 
+        metalness={0.3}
+        roughness={0.7}
+        emissive={planet.color}
+        emissiveIntensity={0.1}
+      />
     </mesh>
   );
 } 

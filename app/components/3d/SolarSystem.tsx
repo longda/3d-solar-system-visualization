@@ -97,8 +97,11 @@ export default function SolarSystem() {
   return (
     <Canvas camera={{ position: [0, 30, 50], fov: 45 }}>
       <color attach="background" args={['#000']} />
-      <ambientLight intensity={0.1} />
-      <pointLight position={[0, 0, 0]} intensity={2} color="white" />
+      <ambientLight intensity={0.4} />
+      <pointLight position={[0, 0, 0]} intensity={5} color="white" distance={100} />
+      {/* Add directional lights to improve planet visibility */}
+      <directionalLight position={[10, 20, 10]} intensity={1} />
+      <directionalLight position={[-10, -20, -10]} intensity={0.5} />
       <OrbitControls 
         makeDefault 
         enablePan={true} 
