@@ -1,22 +1,45 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Use dynamic import with no SSR for the 3D components
 const SolarSystem = dynamic(() => import('./components/3d/SolarSystem'), { ssr: false });
 const Controls = dynamic(() => import('./components/ui/Controls'), { ssr: false });
 
+// Loading component
+function LoadingScreen() {
+  return (
+    <div className="w-full h-screen flex items-center justify-center bg-black">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <p className="text-white text-xl">Loading Solar System...</p>
+      </div>
+    </div>
+  );
+}
+
 export default function SolarSystemPage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold mb-8 pt-8">3D Solar System Visualization</h1>
-      <div className="text-center mb-8">
-        <p className="mb-4">Interactive 3D visualization of our solar system</p>
-        <p className="text-sm text-gray-500">Built with Next.js, Three.js, and React Three Fiber</p>
+    <main className="flex flex-col items-center justify-center min-h-screen relative">
+      <div className="absolute top-0 left-0 right-0 p-4 z-10 bg-black/70 backdrop-blur-sm">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-white">
+          3D Solar System Visualization
+        </h1>
+        <p className="text-center text-gray-300 mt-2">
+          Interactive 3D visualization of our solar system
+        </p>
       </div>
-      <div className="w-full max-w-6xl h-[600px] bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg mb-20 overflow-hidden">
-        <SolarSystem />
+      
+      <div className="w-full h-screen">
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingScreen />}>
+            <SolarSystem />
+          </Suspense>
+        </ErrorBoundary>
       </div>
+      
       <Controls />
     </main>
   );
