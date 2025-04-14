@@ -23,7 +23,7 @@ An interactive 3D model of the solar system with orbiting planets and a draggabl
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/3d-solar-system-visualization.git
+   git clone https://github.com/longda/3d-solar-system-visualization.git
    cd 3d-solar-system-visualization
    ```
 
