@@ -2,22 +2,12 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { useRef, Suspense } from 'react';
+import { useRef } from 'react';
 import { Group, Mesh } from 'three';
 import planetData from '@/app/lib/planets-data';
 import Planet from './Planet';
 import Orbit from './Orbit';
 import SaturnRings from './SaturnRings';
-
-// Simple fallback for loading
-function LoadingFallback() {
-  return (
-    <mesh>
-      <sphereGeometry args={[1, 16, 16]} />
-      <meshStandardMaterial color="gray" />
-    </mesh>
-  );
-}
 
 function Sun() {
   const meshRef = useRef<Mesh>(null);

@@ -16,7 +16,7 @@ export default function Planet({ planet, orbitRadius }: PlanetProps) {
   // Self-rotation speed - scale based on planet size for visualization
   const rotationSpeed = 0.01 / (planet.size * 0.5);
 
-  useFrame(({ clock }) => {
+  useFrame(( /* { clock } */ ) => {
     if (meshRef.current) {
       // Self-rotation on the Y axis
       meshRef.current.rotation.y += rotationSpeed;
