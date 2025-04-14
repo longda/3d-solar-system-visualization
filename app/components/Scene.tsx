@@ -191,7 +191,13 @@ export function Scene() {
         <ambientLight intensity={0.5} />
         <PerspectiveCamera makeDefault position={initialCameraPosition} fov={initialFov} />
         <Stars radius={150} depth={50} count={5000} factor={4} saturation={0} speed={0.5} />
-        <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
+        <OrbitControls 
+          ref={controlsRef} 
+          enablePan={true} 
+          enableZoom={true} 
+          enableRotate={true} 
+          maxDistance={145}
+        />
         <KeyboardControls controlsRef={controlsRef} />
         {/* Add the helper component inside Canvas */}
         <TimelineSetupHelper 
