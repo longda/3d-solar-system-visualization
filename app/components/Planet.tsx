@@ -9,9 +9,10 @@ interface PlanetProps {
   planetData: PlanetData; // Pass the whole data object
   onPlanetClick: (planetData: PlanetData) => void; // Callback for click
   isPlaying: boolean; // Add isPlaying prop
+  animationSpeed: number; // Add animationSpeed prop
 }
 
-export function Planet({ planetData, onPlanetClick, isPlaying }: PlanetProps) {
+export function Planet({ planetData, onPlanetClick, isPlaying, animationSpeed }: PlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null!)
   const angleRef = useRef(Math.random() * Math.PI * 2) // Start at random position
 
@@ -20,15 +21,17 @@ export function Planet({ planetData, onPlanetClick, isPlaying }: PlanetProps) {
   useFrame((state, delta) => {
     if (!meshRef.current || !isPlaying) return; // Stop animation if not playing
 
+    const effectiveDelta = delta * animationSpeed; // Apply speed multiplier
+
     // Orbital movement
     const speedFactor = 365.25 / planetData.orbitalPeriod; // Use period from data
-    angleRef.current += speedFactor * delta * 0.1 // Adjust speed multiplier as needed
+    angleRef.current += speedFactor * effectiveDelta * 0.1 // Use effectiveDelta
     const x = Math.cos(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
     const z = Math.sin(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
     meshRef.current.position.set(x, 0, z)
 
     // Axial rotation (spinning)
-    meshRef.current.rotation.y += delta * 0.2; // Adjust rotation speed as needed
+    meshRef.current.rotation.y += effectiveDelta * 0.2; // Use effectiveDelta
   })
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {

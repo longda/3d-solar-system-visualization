@@ -67,6 +67,7 @@ function KeyboardControls({ controlsRef }: { controlsRef: React.RefObject<OrbitC
 export function Scene() {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [animationSpeed, setAnimationSpeed] = useState(1);
   const controlsRef = useRef<OrbitControlsImpl>(null); // Ref for OrbitControls
 
   const handlePlanetClick = (planetData: PlanetData) => {
@@ -87,9 +88,18 @@ export function Scene() {
     setIsPlaying(!isPlaying);
   };
 
+  const handleSpeedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAnimationSpeed(parseFloat(event.target.value));
+  };
+
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-      <ControlPanel isPlaying={isPlaying} onTogglePlayPause={togglePlayPause} />
+      <ControlPanel 
+        isPlaying={isPlaying} 
+        onTogglePlayPause={togglePlayPause} 
+        animationSpeed={animationSpeed}
+        onSpeedChange={handleSpeedChange}
+      />
       <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'black' }}>
         <ambientLight intensity={0.5} />
         <PerspectiveCamera makeDefault position={[0, 50, 150]} fov={75} />
@@ -110,6 +120,7 @@ export function Scene() {
             planetData={planet}
             onPlanetClick={handlePlanetClick}
             isPlaying={isPlaying}
+            animationSpeed={animationSpeed}
           />
         ))}
       </Canvas>
