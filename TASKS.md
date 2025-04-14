@@ -59,7 +59,7 @@
 ---
 
 ## Phase 6: Animation & Effects
-- [ ] Create orbital animation system (🤖 "Animate planet orbits using GSAP")
+- [x] Create orbital animation system (🤖 "Animate planet orbits using GSAP")
 - [ ] Add sun glow effect (🤖 "Implement sun glow with drei/Sparkles")
 - [ ] Add atmospheric shaders (🤖 "Add atmosphere effect to Earth using shaders")
 

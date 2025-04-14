@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { PerspectiveCamera, Stars, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
+import gsap from 'gsap'
 import { Planet } from './Planet'
 import { InfoPanel } from './InfoPanel'
 import { ControlPanel } from './ui/ControlPanel'
@@ -64,23 +65,99 @@ function KeyboardControls({ controlsRef }: { controlsRef: React.RefObject<OrbitC
   return null; // This component doesn't render anything itself
 }
 
+// Helper component to run useFrame logic inside Canvas
+interface TimelineSetupHelperProps {
+  planetRefs: React.RefObject<{ [key: string]: THREE.Mesh | null }>;
+  timelineSetupComplete: React.MutableRefObject<boolean>;
+  setupTimeline: () => void;
+}
+function TimelineSetupHelper({ planetRefs, timelineSetupComplete, setupTimeline }: TimelineSetupHelperProps) {
+  useFrame(() => {
+    if (!timelineSetupComplete.current) {
+      const allRefsReady = planets.every(p => planetRefs.current?.[p.name]);
+      if (allRefsReady) {
+        setupTimeline();
+        timelineSetupComplete.current = true;
+      }
+    }
+  });
+  return null; // Doesn't render anything visible
+}
+
 export function Scene() {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [animationSpeed, setAnimationSpeed] = useState(1);
-  const controlsRef = useRef<OrbitControlsImpl>(null); // Ref for OrbitControls
+  const controlsRef = useRef<OrbitControlsImpl>(null);
+  const planetRefs = useRef<{ [key: string]: THREE.Mesh | null }>({});
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const timelineSetupComplete = useRef(false);
 
-  // Basic check for mobile-like screen width on client
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const initialCameraPosition: [number, number, number] = isMobile ? [0, 60, 180] : [0, 50, 150];
-  const initialFov = isMobile ? 85 : 75;
+  // Initialize planet refs container
+  useEffect(() => {
+    planets.forEach(planet => {
+      planetRefs.current[planet.name] = null;
+    });
+    return () => {
+      timelineRef.current?.kill();
+      timelineRef.current = null;
+      timelineSetupComplete.current = false;
+    }
+  }, []);
 
+  // Function to setup the GSAP timeline
+  const setupTimeline = useCallback(() => {
+    const tl = gsap.timeline({ repeat: -1, paused: !isPlaying });
+    timelineRef.current = tl;
+
+    planets.forEach(planet => {
+      const mesh = planetRefs.current[planet.name];
+      if (!mesh) {
+        console.error(`Ref for planet ${planet.name} not ready for GSAP.`);
+        return; // Skip if ref not ready (shouldn't happen if check passes)
+      }
+
+      const radius = planet.orbitalRadius * 10; 
+      const duration = (planet.orbitalPeriod / 365.25) * 20; 
+      const startAngle = Math.random() * Math.PI * 2;
+      
+      // Set initial position explicitly
+      mesh.position.x = Math.cos(startAngle) * radius;
+      mesh.position.z = Math.sin(startAngle) * radius;
+      mesh.position.y = 0; // Ensure Y is 0
+
+      // Animate using GSAP
+      const orbitParams = { angle: startAngle }; 
+      tl.to(orbitParams, {
+        angle: startAngle + Math.PI * 2,
+        duration: duration,
+        ease: "none",
+        onUpdate: () => {
+          mesh.position.x = Math.cos(orbitParams.angle) * radius;
+          mesh.position.z = Math.sin(orbitParams.angle) * radius;
+        }
+      }, 0); 
+    });
+    console.log("GSAP timeline setup complete.")
+  }, [isPlaying]);
+
+  // Control timeline playback based on state
+  useEffect(() => {
+    if (timelineRef.current) {
+      gsap.to(timelineRef.current, { timeScale: animationSpeed, duration: 0.3 });
+      if (isPlaying) {
+        timelineRef.current.play();
+      } else {
+        timelineRef.current.pause();
+      }
+    }
+  }, [isPlaying, animationSpeed]);
+
+  // Define handlers
   const handlePlanetClick = (planetData: PlanetData) => {
-    // If the clicked planet is already selected, deselect it (toggle off)
     if (selectedPlanet && selectedPlanet.name === planetData.name) {
       setSelectedPlanet(null);
     } else {
-      // Otherwise, select the clicked planet
       setSelectedPlanet(planetData);
     }
   };
@@ -97,6 +174,11 @@ export function Scene() {
     setAnimationSpeed(parseFloat(event.target.value));
   };
 
+  // Basic check for mobile-like screen width on client
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialCameraPosition: [number, number, number] = isMobile ? [0, 60, 180] : [0, 50, 150];
+  const initialFov = isMobile ? 85 : 75;
+
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
       <ControlPanel 
@@ -111,6 +193,12 @@ export function Scene() {
         <Stars radius={300} depth={50} count={10000} factor={5} saturation={0} fade speed={1} />
         <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
         <KeyboardControls controlsRef={controlsRef} />
+        {/* Add the helper component inside Canvas */}
+        <TimelineSetupHelper 
+          planetRefs={planetRefs}
+          timelineSetupComplete={timelineSetupComplete}
+          setupTimeline={setupTimeline}
+        />
         {/* Sun */}
         <mesh>
           <sphereGeometry args={[1.5, 32, 32]} />
@@ -123,6 +211,7 @@ export function Scene() {
           <Planet
             key={planet.name}
             planetData={planet}
+            ref={(el: THREE.Mesh | null) => { planetRefs.current[planet.name] = el; }}
             onPlanetClick={handlePlanetClick}
             isPlaying={isPlaying}
             animationSpeed={animationSpeed}

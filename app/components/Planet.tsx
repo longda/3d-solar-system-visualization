@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, forwardRef } from 'react'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PlanetData } from '../../data/planets' // Import PlanetData
@@ -12,26 +12,23 @@ interface PlanetProps {
   animationSpeed: number; // Add animationSpeed prop
 }
 
-export function Planet({ planetData, onPlanetClick, isPlaying, animationSpeed }: PlanetProps) {
-  const meshRef = useRef<THREE.Mesh>(null!)
-  const angleRef = useRef(Math.random() * Math.PI * 2) // Start at random position
+// Wrap component logic in a function
+const PlanetComponent = (
+  { planetData, onPlanetClick, isPlaying, animationSpeed }: PlanetProps,
+  ref: React.ForwardedRef<THREE.Mesh> // Add forwarded ref parameter
+) => {
+  // const meshRef = useRef<THREE.Mesh>(null!); // Use the forwarded ref instead
 
-  const { size, orbitalRadius, name, color } = planetData;
+  const { size, name, color } = planetData;
 
   useFrame((state, delta) => {
-    if (!meshRef.current || !isPlaying) return; // Stop animation if not playing
+    const mesh = ref && (ref as React.RefObject<THREE.Mesh>).current;
+    if (!mesh || !isPlaying) return; // Check forwarded ref
 
     const effectiveDelta = delta * animationSpeed; // Apply speed multiplier
 
-    // Orbital movement
-    const speedFactor = 365.25 / planetData.orbitalPeriod; // Use period from data
-    angleRef.current += speedFactor * effectiveDelta * 0.1 // Use effectiveDelta
-    const x = Math.cos(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
-    const z = Math.sin(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
-    meshRef.current.position.set(x, 0, z)
-
-    // Axial rotation (spinning)
-    meshRef.current.rotation.y += effectiveDelta * 0.2; // Use effectiveDelta
+    // Keep Axial rotation (spinning)
+    mesh.rotation.y += effectiveDelta * 0.2; // Use effectiveDelta
   })
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
@@ -40,9 +37,12 @@ export function Planet({ planetData, onPlanetClick, isPlaying, animationSpeed }:
   };
 
   return (
-    <mesh ref={meshRef} name={name} onClick={handleClick}>
+    <mesh ref={ref} name={name} onClick={handleClick}> {/* Assign forwarded ref */}
       <sphereGeometry args={[size * 0.5, 32, 32]} /> {/* Use size from planetData */}
       <meshStandardMaterial color={color} /> {/* Use color from planetData */}
     </mesh>
   )
-} 
+}
+
+// Export the component wrapped in forwardRef
+export const Planet = forwardRef(PlanetComponent); 
