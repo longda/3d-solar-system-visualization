@@ -30,8 +30,8 @@
 ---
 
 ## Phase 3: Planet Implementation
-- [ ] Create `components/Planet.tsx` (🤖 "Create a reusable Planet component with orbit")
-- [ ] Add Mercury as prototype:
+- [x] Create `components/Planet.tsx` (🤖 "Create a reusable Planet component with orbit")
+- [x] Add Mercury as prototype:
   ```
   // 🤖 "Add Mercury with 0.4x Earth size, 5.8 AU distance, 88-day orbit"
   ```
