@@ -16,11 +16,11 @@
 ---
 
 ## Phase 2: Basic 3D Scene
-- [ ] Create `components/Scene.tsx` with:
+- [x] Create `components/Scene.tsx` with:
   ```
   // 🤖 "Create a React Three Fiber scene with ambient light and perspective camera"
   ```
-- [ ] Add starry background using `drei/Stars` (🤖 "Add starry background to R3F scene")
+- [x] Add starry background using `drei/Stars` (🤖 "Add starry background to R3F scene")
 - [ ] Create a simple sun sphere:
   ```
   // 🤖 "Create a glowing sun sphere with Three.js in React Three Fiber"
