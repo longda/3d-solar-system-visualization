@@ -17,13 +17,7 @@ export function InfoPanel({ planet, onClose }: InfoPanelProps) {
     <div 
       className={`fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-90 text-white p-6 shadow-lg transform transition-transform duration-300 ease-in-out ${planet ? 'translate-y-0' : 'translate-y-full'}`}
     >
-      <button 
-        onClick={onClose}
-        className="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl font-bold"
-      >
-        &times; {/* Close button */}
-      </button>
-      <h2 className="text-2xl font-bold mb-4">{planet.name}</h2>
+      <h2 className="text-2xl font-bold mb-4 mt-6">{planet.name}</h2>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <p><span className="font-semibold">Size (vs Earth):</span> {planet.size.toFixed(3)}</p>
