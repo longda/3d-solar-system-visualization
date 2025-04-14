@@ -1,17 +1,17 @@
 # Tasks: 3D Solar System Checklist
 
 ## Phase 1: Project Setup
-- [ ] Create new Next.js project:
+- [x] Create new Next.js project:
   ```
   npx create-next-app@latest solar-system --typescript --tailwind
   ```
-- [ ] Install dependencies:
+- [x] Install dependencies:
   ```
   cd solar-system && npm install three @react-three/fiber @react-three/drei @types/three gsap
   ```
-- [ ] Delete unnecessary boilerplate (keep `pages/_app.tsx` and `pages/index.tsx` clean)
-- [ ] Configure Tailwind in `tailwind.config.js` (🤖 "Help me configure Tailwind for 3D overlays")
-- [ ] Set up ESLint/Prettier (🤖 "Add ESLint config for React Three Fiber")
+- [x] Delete unnecessary boilerplate (keep `pages/_app.tsx` and `pages/index.tsx` clean)
+- [x] Configure Tailwind in `tailwind.config.js` (🤖 "Help me configure Tailwind for 3D overlays")
+- [x] Set up ESLint/Prettier (🤖 "Add ESLint config for React Three Fiber")
 
 ---
 
