@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { PerspectiveCamera, Stars, OrbitControls } from '@react-three/drei'
+import { PerspectiveCamera, Stars, OrbitControls, Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { Planet } from './Planet'
@@ -202,8 +202,15 @@ export function Scene() {
         {/* Sun */}
         <mesh>
           <sphereGeometry args={[1.5, 32, 32]} />
-          <meshStandardMaterial emissive="yellow" emissiveIntensity={2} />
+          <meshStandardMaterial emissive="yellow" emissiveIntensity={2} toneMapped={false} />
           <pointLight intensity={200} color="yellow" distance={1000} />
+          <Sparkles 
+            count={100} 
+            scale={3.5}
+            size={6} 
+            speed={0.4} 
+            color="#FFDB58"
+          />
         </mesh>
         
         {/* Planets */}
