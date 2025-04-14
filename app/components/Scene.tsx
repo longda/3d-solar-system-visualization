@@ -190,7 +190,7 @@ export function Scene() {
       <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'black' }}>
         <ambientLight intensity={0.5} />
         <PerspectiveCamera makeDefault position={initialCameraPosition} fov={initialFov} />
-        <Stars radius={300} depth={50} count={10000} factor={5} saturation={0} fade speed={1} />
+        <Stars radius={150} depth={50} count={5000} factor={4} saturation={0} speed={0.5} />
         <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
         <KeyboardControls controlsRef={controlsRef} />
         {/* Add the helper component inside Canvas */}
