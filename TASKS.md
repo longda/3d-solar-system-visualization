@@ -37,7 +37,7 @@
   ```
 - [x] Create planet configuration file `data/planets.ts` (🤖 "Generate TS planet data with scaled sizes/orbits")
 - [x] Add remaining planets using config (🤖 "Map planet data to Planet components")
-- [ ] Add axial rotations (🤖 "Add planet rotation using useFrame")
+- [x] Add axial rotations (🤖 "Add planet rotation using useFrame")
 
 ---
 

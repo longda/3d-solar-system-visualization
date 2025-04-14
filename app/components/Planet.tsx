@@ -22,6 +22,8 @@ export function Planet({ name, size, color, orbitalRadius, orbitalSpeed }: Plane
       const x = Math.cos(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
       const z = Math.sin(angleRef.current) * orbitalRadius * 10 // Scale AU for visualization
       meshRef.current.position.set(x, 0, z)
+
+      meshRef.current.rotation.y += delta * 0.2; // Adjust rotation speed as needed
     }
   })
 
