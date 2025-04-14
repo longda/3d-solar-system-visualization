@@ -46,7 +46,7 @@
 - [x] Add click detection (🤖 "Implement onClick for R3F mesh objects")
 - [x] Create `components/InfoPanel.tsx` (🤖 "Create sliding info panel for planet data")
 - [x] Integrate InfoPanel into Scene (manage selected planet state, open/close panel)
-- [ ] Add keyboard navigation (🤖 "Add keyboard controls for camera movement")
+- [x] Add keyboard navigation (🤖 "Add keyboard controls for camera movement")
 
 ---
 
