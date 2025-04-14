@@ -42,7 +42,7 @@
 ---
 
 ## Phase 4: Interactivity
-- [ ] Implement camera controls (🤖 "Add OrbitControls to R3F scene")
+- [x] Implement camera controls (🤖 "Add OrbitControls to R3F scene")
 - [ ] Add click detection (🤖 "Implement onClick for R3F mesh objects")
 - [ ] Create `components/InfoPanel.tsx` (🤖 "Create sliding info panel for planet data")
 - [ ] Add keyboard navigation (🤖 "Add keyboard controls for camera movement")
