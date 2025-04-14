@@ -3,6 +3,7 @@
 import React, { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { ThreeEvent } from '@react-three/fiber'
 
 interface PlanetProps {
   name: string
@@ -27,8 +28,14 @@ export function Planet({ name, size, color, orbitalRadius, orbitalSpeed }: Plane
     }
   })
 
+  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    event.stopPropagation(); // Prevent click from propagating to underlying canvas/controls
+    console.log(`Clicked on: ${name}`);
+    // TODO: Implement logic to show info panel for this planet
+  };
+
   return (
-    <mesh ref={meshRef} name={name}>
+    <mesh ref={meshRef} name={name} onClick={handleClick}>
       <sphereGeometry args={[size * 0.5, 32, 32]} /> {/* Scale size for visualization */}
       <meshStandardMaterial color={color} />
     </mesh>
