@@ -14,7 +14,13 @@ export function Scene() {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
 
   const handlePlanetClick = (planetData: PlanetData) => {
-    setSelectedPlanet(planetData);
+    // If the clicked planet is already selected, deselect it (toggle off)
+    if (selectedPlanet && selectedPlanet.name === planetData.name) {
+      setSelectedPlanet(null);
+    } else {
+      // Otherwise, select the clicked planet
+      setSelectedPlanet(planetData);
+    }
   };
 
   const handleClosePanel = () => {
