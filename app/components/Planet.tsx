@@ -4,6 +4,7 @@ import React, { useRef, forwardRef } from 'react'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PlanetData } from '../../data/planets' // Import PlanetData
+import { Atmosphere } from './3d/Atmosphere' // Corrected import path
 
 interface PlanetProps {
   planetData: PlanetData; // Pass the whole data object
@@ -40,6 +41,8 @@ const PlanetComponent = (
     <mesh ref={ref} name={name} onClick={handleClick}> {/* Assign forwarded ref */}
       <sphereGeometry args={[size * 0.5, 32, 32]} /> {/* Use size from planetData */}
       <meshStandardMaterial color={color} /> {/* Use color from planetData */}
+      {/* Conditionally render atmosphere for Earth */}
+      {name === 'Earth' && <Atmosphere size={size} />}
     </mesh>
   )
 }
