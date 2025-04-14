@@ -36,7 +36,7 @@
   // 🤖 "Add Mercury with 0.4x Earth size, 5.8 AU distance, 88-day orbit"
   ```
 - [x] Create planet configuration file `data/planets.ts` (🤖 "Generate TS planet data with scaled sizes/orbits")
-- [ ] Add remaining planets using config (🤖 "Map planet data to Planet components")
+- [x] Add remaining planets using config (🤖 "Map planet data to Planet components")
 - [ ] Add axial rotations (🤖 "Add planet rotation using useFrame")
 
 ---
