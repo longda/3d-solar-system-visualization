@@ -25,7 +25,7 @@
   ```
   // 🤖 "Create a glowing sun sphere with Three.js in React Three Fiber"
   ```
-- [ ] Test scene rendering in `pages/index.tsx`
+- [x] Test scene rendering in `pages/index.tsx`
 
 ---
 
