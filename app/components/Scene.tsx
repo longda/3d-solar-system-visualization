@@ -6,6 +6,7 @@ import { PerspectiveCamera, Stars, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { Planet } from './Planet'
 import { InfoPanel } from './InfoPanel'
+import { ControlPanel } from './ui/ControlPanel'
 import { planets, PlanetData } from '../../data/planets'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 
@@ -65,6 +66,7 @@ function KeyboardControls({ controlsRef }: { controlsRef: React.RefObject<OrbitC
 
 export function Scene() {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   const controlsRef = useRef<OrbitControlsImpl>(null); // Ref for OrbitControls
 
   const handlePlanetClick = (planetData: PlanetData) => {
@@ -81,8 +83,13 @@ export function Scene() {
     setSelectedPlanet(null);
   };
 
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+      <ControlPanel isPlaying={isPlaying} onTogglePlayPause={togglePlayPause} />
       <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'black' }}>
         <ambientLight intensity={0.5} />
         <PerspectiveCamera makeDefault position={[0, 50, 150]} fov={75} />
@@ -102,6 +109,7 @@ export function Scene() {
             key={planet.name}
             planetData={planet}
             onPlanetClick={handlePlanetClick}
+            isPlaying={isPlaying}
           />
         ))}
       </Canvas>
