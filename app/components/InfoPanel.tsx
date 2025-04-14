@@ -15,7 +15,17 @@ export function InfoPanel({ planet, onClose }: InfoPanelProps) {
 
   return (
     <div 
-      className={`fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-90 text-white p-4 sm:p-6 shadow-lg transform transition-transform duration-300 ease-in-out ${planet ? 'translate-y-0' : 'translate-y-full'} max-h-[35vh] overflow-y-auto z-10`}
+      style={{ 
+        position: 'fixed',
+        bottom: '1.5rem',
+        left: '1.5rem',
+        right: '1.5rem',
+        backgroundColor: 'rgba(31, 41, 55, 0.5)',
+        zIndex: 10,
+        maxHeight: '35vh',
+        overflowY: 'auto'
+      }}
+      className={`text-white px-6 sm:px-8 py-4 sm:py-6 shadow-lg transform transition-transform duration-300 ease-in-out ${planet ? 'translate-y-0' : 'translate-y-full'}`}
     >
       <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 mt-4 sm:mt-6">{planet.name}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-sm sm:text-base">
