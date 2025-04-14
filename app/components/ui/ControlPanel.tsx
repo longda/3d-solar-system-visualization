@@ -16,7 +16,10 @@ export function ControlPanel({
   onSpeedChange 
 }: ControlPanelProps) {
   return (
-    <div className="fixed top-4 left-4 bg-gray-700 bg-opacity-80 text-white p-3 sm:p-4 rounded-lg shadow-md z-10 w-48 sm:w-64">
+    <div 
+      style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 20 }}
+      className="bg-gray-700 bg-opacity-80 text-white p-3 sm:p-4 rounded-lg shadow-md w-48 sm:w-64"
+    >
       <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Controls</h3>
       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mb-2 sm:mb-3">
         <button 
