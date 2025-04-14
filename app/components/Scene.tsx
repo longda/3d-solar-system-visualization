@@ -70,6 +70,11 @@ export function Scene() {
   const [animationSpeed, setAnimationSpeed] = useState(1);
   const controlsRef = useRef<OrbitControlsImpl>(null); // Ref for OrbitControls
 
+  // Basic check for mobile-like screen width on client
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialCameraPosition: [number, number, number] = isMobile ? [0, 60, 180] : [0, 50, 150];
+  const initialFov = isMobile ? 85 : 75;
+
   const handlePlanetClick = (planetData: PlanetData) => {
     // If the clicked planet is already selected, deselect it (toggle off)
     if (selectedPlanet && selectedPlanet.name === planetData.name) {
@@ -102,7 +107,7 @@ export function Scene() {
       />
       <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'black' }}>
         <ambientLight intensity={0.5} />
-        <PerspectiveCamera makeDefault position={[0, 50, 150]} fov={75} />
+        <PerspectiveCamera makeDefault position={initialCameraPosition} fov={initialFov} />
         <Stars radius={300} depth={50} count={10000} factor={5} saturation={0} fade speed={1} />
         <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
         <KeyboardControls controlsRef={controlsRef} />
