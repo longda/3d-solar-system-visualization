@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, forwardRef } from 'react'
+import React, { forwardRef, useCallback } from 'react'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PlanetData } from '../../data/planets' // Import PlanetData

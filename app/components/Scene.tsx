@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { PerspectiveCamera, Stars, OrbitControls, Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
@@ -10,8 +10,6 @@ import { InfoPanel } from './InfoPanel'
 import { ControlPanel } from './ui/ControlPanel'
 import { planets, PlanetData } from '../../data/planets'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
-
-const EARTH_ORBITAL_PERIOD = 365.25;
 
 // Component to handle keyboard controls
 function KeyboardControls({ controlsRef }: { controlsRef: React.RefObject<OrbitControlsImpl | null> }) {
@@ -162,10 +160,6 @@ export function Scene() {
     }
   };
 
-  const handleClosePanel = () => {
-    setSelectedPlanet(null);
-  };
-
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
@@ -231,7 +225,7 @@ export function Scene() {
           />
         ))}
       </Canvas>
-      <InfoPanel planet={selectedPlanet} onClose={handleClosePanel} />
+      <InfoPanel planet={selectedPlanet} />
     </div>
   )
 } 

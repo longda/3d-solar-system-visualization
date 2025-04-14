@@ -5,10 +5,10 @@ import { PlanetData } from '../../data/planets'; // Assuming PlanetData is expor
 
 interface InfoPanelProps {
   planet: PlanetData | null;
-  onClose: () => void;
+  // onClose: () => void; // Remove unused prop
 }
 
-export function InfoPanel({ planet, onClose }: InfoPanelProps) {
+export function InfoPanel({ planet }: InfoPanelProps) {
   if (!planet) {
     return null; // Don't render if no planet is selected
   }
