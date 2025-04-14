@@ -34,6 +34,10 @@ export default function SolarSystemPage() {
         </div>
       </div>
       
+      <div className="fixed top-8 right-8 z-50">
+        <Controls />
+      </div>
+      
       <div className="w-full h-screen pt-20">
         <ErrorBoundary>
           <Suspense fallback={<LoadingScreen />}>
@@ -41,8 +45,6 @@ export default function SolarSystemPage() {
           </Suspense>
         </ErrorBoundary>
       </div>
-      
-      <Controls />
     </main>
   );
 } 
