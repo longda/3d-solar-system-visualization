@@ -29,7 +29,12 @@ export function ControlPanel({
       <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Controls</h3>
       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mb-2 sm:mb-3">
         <button 
-          className="px-3 py-1 bg-blue-500 hover:bg-blue-600 rounded text-sm w-full sm:w-20 mb-2 sm:mb-0"
+          style={{ 
+            backgroundColor: '#3B82F6',
+            borderRadius: '0.375rem',
+            border: '1px solid transparent'
+          }}
+          className="px-3 py-1 text-white text-sm w-full sm:w-20 mb-2 sm:mb-0"
           onClick={onTogglePlayPause}
         >
           {isPlaying ? 'Pause' : 'Play'}
@@ -45,7 +50,8 @@ export function ControlPanel({
           step="0.1" 
           value={animationSpeed}
           onChange={onSpeedChange}
-          className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          style={{ backgroundColor: '#4B5563' }}
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer"
         />
       </div>
     </div>
